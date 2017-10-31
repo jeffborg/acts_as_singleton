@@ -17,7 +17,7 @@ module ActiveRecord
   # clash with the <tt>ActiveRecord::Singleton::PRIVATE</tt> pattern, or
   # define them after including the module.
   module Singleton
-    VERSION = "0.0.8"
+    VERSION = "0.0.8a"
 
     # This pattern matches methods that should be made private because they
     # should not be used in singleton classes.
@@ -44,7 +44,7 @@ module ActiveRecord
           end
 
           def find(*)
-            unless caller.first.include?("lib/active_record")
+            unless (caller.first.include?("lib/active_record") or caller.first.include?("global_id/locator"))
               raise NoMethodError,
                 "private method `find' called for #{inspect}"
             end
